@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>betagxz</title>
+  
+  <style>
+    /* Reset & base */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 0;
+      background-color: #f5f7f6;
+      color: #333;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    a {
+      color: #2d572c;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* === Password box top-right disguised as error === */
+    #passwordBox {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #f44336;
+      color: white;
+      font-family: monospace;
+      padding: 12px 18px;
+      border-radius: 6px;
+      box-shadow: 0 0 8px #f44336aa;
+      cursor: pointer;
+      width: 220px;
+      user-select: none;
+      z-index: 9999;
+      font-size: 0.9rem;
+    }
+
+    #passwordBox:hover {
+      background-color: #d32f2f;
+      box-shadow: 0 0 12px #d32f2faa;
+    }
+
+    #passwordBox input {
+      margin-top: 8px;
+      width: 100%;
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #9e0000;
+      background-color: #fee9e9;
+      color: #900;
+      font-weight: bold;
+      font-family: monospace;
+    }
+
+    #passwordBox button {
+      margin-top: 6px;
+      width: 100%;
+      padding: 8px;
+      background-color: #9e0000;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #passwordBox button:hover {
+      background-color: #7a0000;
+    }
+
+    /* === Plant Site - professional botanical style === */
+    #plantSite {
+      max-width: 900px;
+      margin: 60px auto 80px;
+      padding: 40px 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+      color: #2d572c;
+      line-height: 1.7;
+    }
+
+    #plantSite h1 {
+      font-weight: 900;
+      font-size: 3rem;
+      margin-bottom: 20px;
+      letter-spacing: 1.2px;
+      border-bottom: 3px solid #2d572c;
+      padding-bottom: 10px;
+    }
+
+    #plantSite img {
+      max-width: 100%;
+      border-radius: 14px;
+      margin: 30px 0;
+      box-shadow: 0 6px 12px rgba(45, 87, 44, 0.25);
+    }
+
+    #plantSite p {
+      font-size: 1.15rem;
+      color: #3a5d30;
+      text-align: justify;
+      margin-bottom: 20px;
+    }
+
+    /* === Hub Site === */
+    #hubSite {
+      display: none;
+      background-color: #0a0f1d;
+      color: #00e500;
+      min-height: 100vh;
+      padding: 40px 20px 60px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-y: auto;
+    }
+
+    #hubSite h1 {
+      font-size: 2.8rem;
+      margin-bottom: 15px;
+      color: #00ff66;
+      text-align: center;
+      text-shadow: 0 0 10px #00ff66;
+    }
+
+    #hubSite p {
+      max-width: 850px;
+      margin: 0 auto 25px;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #a8f4a8;
+      text-align: center;
+    }
+
+    #hubSite a {
+      color: #00e500;
+      font-weight: 700;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    #hubSite a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    /* Lists styling */
+    #hubSite ul {
+      list-style: none;
+      padding: 0;
+      max-width: 850px;
+      margin: 0 auto 40px;
+    }
+    #hubSite li {
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+      color: #88ff88;
+    }
+
+    /* Sections styling */
+    #hubSite section {
+      max-width: 900px;
+      background: #111827;
+      margin: 40px auto;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #00ff6688;
+      color: #c0fbc0;
+    }
+    #hubSite section h2 {
+      color: #00ff99;
+      margin-bottom: 20px;
+      font-size: 1.9rem;
+      text-shadow: 0 0 8px #00ff99aa;
+      user-select: none;
+    }
+    #hubSite section ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    #hubSite section li {
+      margin-bottom: 12px;
+      font-size: 1.05rem;
+      color: #a0f0a0;
+    }
+    #hubSite code {
+      background: #1e293b;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-family: monospace;
+      color: #aaffaa;
+      user-select: text;
+    }
+
+    /* Link Buttons */
+    .link-button {
+      display: inline-block;
+      background-color: #00e500;
+      color: #111;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 0 8px #00ff66cc;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+    .link-button:hover {
+      background-color: #00b500;
+    }
+
+    /* Proxy section */
+    #hubSite .hub-proxy {
+      margin-top: 30px;
+    }
+    #proxyFrameContainer iframe {
+      width: 100%;
+      height: 600px;
+      border-radius: 10px;
+      border: 2px solid #00e500;
+      margin-top: 20px;
+      box-shadow: 0 0 10px #00ff66bb;
+    }
+
+    /* Scrollbar for hub */
+    #hubSite::-webkit-scrollbar {
+      width: 8px;
+    }
+    #hubSite::-webkit-scrollbar-thumb {
+      background-color: #00e500aa;
+      border-radius: 4px;
+    }
+    #hubSite::-webkit-scrollbar-track {
+      background: #0a0f1d;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      #plantSite, #hubSite section {
+        padding: 20px 15px;
+      }
+      #plantSite h1 {
+        font-size: 2.2rem;
+      }
+      #hubSite h1 {
+        font-size: 2rem;
+      }
+      #hubSite section h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Password box disguised as error (top-right) -->
+  <div id="passwordBox" title="Error: Unauthorized Access Detected">
+    <div>⚠️ Error: Unauthorized Access</div>
+    <input
+      type="password"
+      id="passwordInput"
+      placeholder="Enter password to continue..."
+      autocomplete="off"
+      spellcheck="false"
+    />
+    <button id="submitPassword">Unlock</button>
+  </div>
+
+  <!-- Plant Site -->
+  <main id="plantSite" aria-label="Botanical Research Center Homepage">
+    <h1>Welcome to the Botanical Research Center</h1>
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Plant_green_leaf_closeup.jpg"
+      alt="Close-up of a green leaf"
+      loading="lazy"
+    />
+    <p>
+      At the Botanical Research Center, we study the biology, chemistry, and
+      growth patterns of thousands of plant species worldwide. Our mission is
+      to preserve biodiversity and educate the public on the importance of
+      plants in sustaining ecosystems.
+    </p>
+    <p>
+      Plants are essential to life on Earth. They produce the oxygen we
+      breathe, provide food, and serve as raw materials for medicine and
+      industry. Dive into our extensive research on photosynthesis, root
+      systems, leaf structures, and more.
+    </p>
+    <p>
+      Our collection boasts over 10,000 species of native and exotic plants,
+      with detailed studies on soil compatibility, water usage, and climate
+      impact.
+    </p>
+  </main>
+
+  <!-- Secret Gaming Hub -->
+  <section id="hubSite" aria-label="Secret Gaming Hub">
+    <h1>🎮 Welcome to <strong>Betagxz</strong></h1>
+    <p>Unblocked games, proxies, and stealth links 👇</p>
+
+    <!-- Game Links -->
+    <section aria-label="Game Links">
+      <h2>Game Links</h2>
+      <ul>
+        <li><a href="https://elitefanatic.vercel.app/" target="_blank" rel="noopener noreferrer">Some kind of search browser with games</a></li>
+        <li><a href="https://sites.google.com/view/drive-u-7-home/" target="_blank" rel="noopener noreferrer">Unblocked games G+</a></li>
+        <li><a href="https://www.childline.org.uk/toolbox/games" target="_blank" rel="noopener noreferrer">Childline games</a></li>
+        <li><a href="https://edgeone.ai/pages/games-unblocked" target="_blank" rel="noopener noreferrer">Another unblocked games website</a></li>
+        <li><a href="https://dynamitebypass.weebly.com/g4m3s.html" target="_blank" rel="noopener noreferrer">Cheap gaming website</a></li>
+        <li><a href="https://subwaysurfersunblocked.org/" target="_blank" rel="noopener noreferrer">Subway surfers (nobody plays that game)</a></li>
+        <li><a href="https://io-games-unblocked.s3.amazonaws.com/category/car-games.html" target="_blank" rel="noopener noreferrer">unblocked io games</a></li>
+        <li><a href="https://www.kongregate.com/" target="_blank" rel="noopener noreferrer">Kongregate</a></li>
+        <li><a href="https://gn-math.github.io/" target="_blank" rel="noopener noreferrer">Gn-math</a></li>
+        <li><a href="https://computercity.com/software/gaming/games-that-are-not-blocked" target="_blank" rel="noopener noreferrer">Games that are not blocked</a></li>
+        <li><a href="https://games.voodoo.io/paperio2/" target="_blank" rel="noopener noreferrer">Paper.io</a></li>
+        <li><a href="https://snake.io/" target="_blank" rel="noopener noreferrer">SNAKE.IO</a></li>
+        <li><a href="https://sites.google.com/view/classroom6x" target="_blank" rel="noopener noreferrer">Classroom 6X</a></li>
+        <li><a href="https://sites.google.com/site/unblockedgame67" target="_blank" rel="noopener noreferrer">Unblocked Game 67</a></li>
+        <li><a href="https://sites.google.com/site/unblockedgamesgold" target="_blank" rel="noopener noreferrer">Unblocked Games Gold</a></li>
+        <li><a href="https://sites.google.com/site/unblockedgamestop/rewind" target="_blank" rel="noopener noreferrer">Games Stop (Rewind)</a></li>
+        <li><a href="https://sites.google.com/site/unblockedgames76ez" target="_blank" rel="noopener noreferrer">Games 76EZ</a></li>
+        <li><a href="https://sites.google.com/site/unblockedgames77/home" target="_blank" rel="noopener noreferrer">Games 77</a></li>
+        <li><a href="https://sites.google.com/site/funblockedgames88" target="_blank" rel="noopener noreferrer">Funblocked Games 88</a></li>
+        <li><a href="https://sites.google.com/site/gamecentral1121" target="_blank" rel="noopener noreferrer">Game Central 1121</a></li>
+        <li><a href="https://sites.google.com/site/gamesrunblocked" target="_blank" rel="noopener noreferrer">Games Runblocked</a></li>
+        <li><a href="https://sites.google.com/site/iounblockedgames77" target="_blank" rel="noopener noreferrer">IO Games 77</a></li>
+        <li><a href="https://sites.google.com/view/html5gamesunblocked/home" target="_blank" rel="noopener noreferrer">HTML5 Games</a></li>
+        <li><a href="https://sites.google.com/view/kevings/" target="_blank" rel="noopener noreferrer">Kevings</a></li>
+        <li><a href="https://m.sites.google.com/site/unblockedgamesportal/portal" target="_blank" rel="noopener noreferrer">Games Portal</a></li>
+        <li><a href="https://sites.google.com/view/unblockedgame/home" target="_blank" rel="noopener noreferrer">Unblocked Game</a></li>
+        <li><a href="https://sites.google.com/site/thegamecompilation/home" target="_blank" rel="noopener noreferrer">Game Compilation</a></li>
+      </ul>
+    </section>
+
+    <!-- Latest News -->
+    <section aria-label="Latest News">
+      <h2>Latest News</h2>
+      <p>On Friday 19 August 2025, our main proxy was blocked due to URL changes, so we had to find a new proxy.</p>
+      <p>Gamers (and scientists) have discovered you can ask ChatGPT for unblocked gaming sites using the prompt: <code>find gaming websites on sites.google.com</code>, which returns reliable links for school access.</p>
+    </section>
+
+    <!-- Tools & Proxies -->
+    <section class="hub-proxy" aria-label="Tools and Proxies">
+      <h2>Tools & Proxies</h2>
+      <p>Use the proxy below to access any website stealthily without clicking external links:</p>
+      <div class="link-button" onclick="openAboutBlank('https://sami-socsd-public.26252526.xyz')">Hammerhead 1</div>
+      <div class="link-button" onclick="openAboutBlank('https://mrfstudyguild.26252526.xyz')">Hammerhead 2</div>
+      <div class="link-button" onclick="openAboutBlank('https://quizzesforhelp.26252526.xyz')">Hammerhead 3</div>
+      <div class="link-button" onclick="openAboutBlank('https://clever.damn-r.eu')">Hammerhead 4</div>
+      <div class="link-button" onclick="openAboutBlank('https://doge.sundblad.com.ar')">Proxy Here!</div>
+      <div class="link-button" onclick="openAboutBlank('https://androgen.eth64.de')">Proxy Here!</div>
+      <div class="link-button" onclick="openAboutBlank('https://butoo.nas64.de')">Proxy Here!</div>
+      <div class="link-button" onclick="openAboutBlank('https://sleep.phonk.toilets.tk')">Proxy Here!</div>
+      <div class="link-button" onclick="openAboutBlank('https://aio.mtomtech.co.kr')">Proxy Here!</div>
+      <div class="link-button" onclick="openAboutBlank('https://shitty.smel.is/')">Proxy Here!</div>
+      <div class="link-button" onclick="openAboutBlank('https://com.108.181.32.77.sslip.io/')">Proxy Here!</div>
+      <div class="link-button" onclick="openAboutBlank('https://bing.com.108.181.32.77.sslip.io')">Proxy Here!</div>
+      <div class="link-button" onclick="openAboutBlank('https://outlook.com.108.181.32.77.sslip.io')">Proxy Here!</div>
+      <div class="link-button" onclick="openAboutBlank ('https://arxthegoat.ts0880.es')">Proxy Here!</div>
+      <div id="proxyFrameContainer"></div>
+    </section>
+
+    <!-- Experimental Lab -->
+    <section aria-label="Experimental Lab"> 
+      <h2>Google docs</h2>
+      <p>Useful google docs with lots of games</p>
+      <ul>
+        <li><a href="https://docs.google.com/document/d/1NCD7FzNqVZQLFLlxaGQeCrjRaz6hLsJwRfkX6J34OeQ/edit?tab=t.0" target="_blank" rel="noopener noreferrer">Google doc here!</a></li>
+      </ul>
+    </section>
+
+    <!-- Activity Log -->
+    <section aria-label="Activity Log">
+      <h2>Activity Log</h2>
+      <p>Track recent updates, blocked links, and fixes:</p>
+      <ul>
+        <li>september 1st 2022 -betagxz was created by Nathan Jones at Green middle school </li>
+        <li>19 Aug 2025 - Added new game links.</li>
+        <li>20 Aug 2025 - New Proxy found</li>
+        <li>9 sep 2025 -  8+ new proxies found</li>
+        <li>13 sep 2025 - site updated</li>
+        <li>1 sep 2025 - Shadow proxy blocked</li>
+      </ul>
+    </section>
+
+    <!-- Mirror Links -->
+    <section aria-label="Mirror Links">
+      <h2></h2>
+      <p>Our partners/useful websites</p>
+      <ul>
+        <li><a href="https://nexislearning.netlify.app" target="_blank" rel="noopener noreferrer">Nexis learning</a></li>
+        <li><a href="https://sites.google.com/view/prohomework2z/home" target="_blank" rel="noopener noreferrer">Prosg2z</a></li>
+      </ul>
+    </section>
+  </section>
+
+  <script>
+
+    // Elements
+    const passwordBox = document.getElementById('passwordBox');
+    const passwordInput = document.getElementById('passwordInput');
+    const submitPassword = document.getElementById('submitPassword');
+    const plantSite = document.getElementById('plantSite');
+    const hubSite = document.getElementById('hubSite');
+    const proxyFrameContainer = document.getElementById('proxyFrameContainer');
+
+    const correctPassword = 'tralalero';
+    let unlocked = false;
+    let isHubActive = false;
+
+    // Open popup window for proxies
+    function openPopup(url) {
+      const width = 900;
+      const height = 600;
+      const left = (window.screen.width / 2) - (width / 2);
+      const top = (window.screen.height / 2) - (height / 2);
+      window.open(
+        url,
+        'proxyPopup',
+        `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`
+      );
+    }
+
+    // (Optional) Load proxy iframe inside page - not used here but handy
+    function loadProxy(url) {
+      proxyFrameContainer.innerHTML = `<iframe src="${url}" frameborder="0" loading="lazy" allowfullscreen></iframe>`;
+    }
+
+    // Unlock action
+    submitPassword.addEventListener('click', () => {
+      const val = passwordInput.value.trim();
+      if (val === correctPassword) {
+        unlocked = true;
+        passwordBox.style.display = 'none';
+        plantSite.style.display = 'none';
+        hubSite.style.display = 'block';
+        isHubActive = true;
+      } else {
+        alert('Incorrect password.');
+        passwordInput.value = '';
+      }
+    });
+
+    // Shortcut toggle: Shift + H toggles between plant & hub if unlocked
+    document.addEventListener('keydown', e => {
+      if (unlocked && e.shiftKey && (e.key === 'H' || e.key === 'h')) {
+        isHubActive = !isHubActive;
+        if (isHubActive) {
+          plantSite.style.display = 'none';
+          hubSite.style.display = 'block';
+        } else {
+          plantSite.style.display = 'block';
+          hubSite.style.display = 'none';
+        }
+      }
+    });
+
+    // On load, show password box
+    window.onload = () => {
+      passwordBox.style.display = 'block';
+      plantSite.style.display = 'block';
+      hubSite.style.display = 'none';
+      passwordInput.focus();
+    };
+  </script>
+  <script>
+    // Function to open URLs in about:blank popup
+    function openAboutBlank(url) {
+        const popup = window.open('about:blank', '_blank');
+        if (popup) {
+            popup.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Proxy Browser</title>
+                    <style>
+                        body, html {
+                            margin: 0;
+                            padding: 0;
+                            height: 100%;
+                            overflow: hidden;
+                        }
+                        iframe {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            border: none;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <iframe src="${url}" allowfullscreen></iframe>
+                </body>
+                </html>
+            `);
+            popup.document.close();
+        } else {
+            alert('Popup blocked. Please allow popups for this site.');
+        }
+    }
+</script>
+</body>
+</html>
