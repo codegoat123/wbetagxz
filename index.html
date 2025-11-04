@@ -40,6 +40,7 @@
       user-select: none;
       z-index: 9999;
       font-size: 0.9rem;
+      display: none; /* hidden by default; shown when © is clicked */
     }
 
     #passwordBox:hover {
@@ -75,6 +76,26 @@
 
     #passwordBox button:hover {
       background-color: #7a0000;
+    }
+
+    /* © trigger */
+    #copyrightTrigger {
+      position: fixed;
+      bottom: 18px;
+      left: 18px;
+      z-index: 9999;
+      font-size: 1.2rem;
+      cursor: pointer;
+      user-select: none;
+      color: #555;
+      background: rgba(255,255,255,0.85);
+      padding: 6px 8px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+    #copyrightTrigger:hover {
+      color: #222;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.18);
     }
 
     /* === Plant Site - professional botanical style === */
@@ -262,7 +283,7 @@
 <body>
 
   <!-- Password box disguised as error (top-right) -->
-  <div id="passwordBox" title="Error: Unauthorized Access Detected">
+  <div id="passwordBox" title="Error: Unauthorized Access Detected" aria-hidden="true">
     <div>⚠️ Error: Unauthorized Access</div>
     <input
       type="password"
@@ -270,6 +291,7 @@
       placeholder="Enter password to continue..."
       autocomplete="off"
       spellcheck="false"
+      aria-label="Password"
     />
     <button id="submitPassword">Unlock</button>
   </div>
@@ -352,7 +374,7 @@
       <h2>Tools & Proxies</h2>
       <p>Use the proxy below to access any website stealthily without clicking external links:</p>
       <div class="link-button" onclick="openAboutBlank('https://sami-socsd-public.26252526.xyz')">Hammerhead 1</div>
-      <div class="link-button" onclick="openAboutBlank('https://abetag.netlify.app')">About blank opener</div>
+      <div class="link-button" onclick="openAboutBlank('https://mrfstudyguild.26252526.xyz')">Hammerhead 2</div>
       <div class="link-button" onclick="openAboutBlank('https://quizzesforhelp.26252526.xyz')">Hammerhead 3</div>
       <div class="link-button" onclick="openAboutBlank('https://clever.damn-r.eu')">Hammerhead 4</div>
       <div class="link-button" onclick="openAboutBlank('https://doge.sundblad.com.ar')">Proxy Here!</div>
@@ -402,6 +424,9 @@
     </section>
   </section>
 
+  <!-- © trigger element -->
+  <div id="copyrightTrigger" role="button" aria-label="Copyright">©</div>
+
   <script>
 
     // Elements
@@ -411,6 +436,7 @@
     const plantSite = document.getElementById('plantSite');
     const hubSite = document.getElementById('hubSite');
     const proxyFrameContainer = document.getElementById('proxyFrameContainer');
+    const copyrightTrigger = document.getElementById('copyrightTrigger');
 
     const correctPassword = 'tralalero';
     let unlocked = false;
@@ -463,12 +489,25 @@
       }
     });
 
-    // On load, show password box
+    // Show password box only when © is clicked
+    copyrightTrigger.addEventListener('click', () => {
+      // Toggle visibility so repeated clicks can hide/show
+      const isVisible = passwordBox.style.display === 'block';
+      if (isVisible) {
+        passwordBox.style.display = 'none';
+        passwordBox.setAttribute('aria-hidden', 'true');
+      } else {
+        passwordBox.style.display = 'block';
+        passwordBox.setAttribute('aria-hidden', 'false');
+        passwordInput.focus();
+      }
+    });
+
+    // On load, ensure plant is visible and hub is hidden; password box stays hidden
     window.onload = () => {
-      passwordBox.style.display = 'block';
+      passwordBox.style.display = 'none';
       plantSite.style.display = 'block';
       hubSite.style.display = 'none';
-      passwordInput.focus();
     };
   </script>
   <script>
@@ -480,7 +519,7 @@
                 <!DOCTYPE html>
                 <html>
                 <head>
-                    <title>Schology</title>
+                    <title>Proxy Browser</title>
                     <style>
                         body, html {
                             margin: 0;
