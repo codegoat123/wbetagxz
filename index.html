@@ -1,546 +1,271 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>betagxz</title>
-  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Schoology</title>
   <style>
-    /* Reset & base */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0; padding: 0;
-      background-color: #f5f7f6;
-      color: #333;
-      overflow-x: hidden;
-      min-height: 100vh;
+    :root{
+      --bg:#071018;
+      --card:#0f1720;
+      --accent:#00e676;
+      --muted:#9aa8a0;
+      --radius:12px;
     }
+    html,body{height:100%;margin:0;font-family:'Segoe UI',Roboto,Arial,sans-serif;background:linear-gradient(180deg,#031018 0%, #071827 100%);color:#dfffe0;-webkit-font-smoothing:antialiased;}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
 
-    a {
-      color: #2d572c;
-      text-decoration: none;
+    /* Header */
+    header{
+      position:sticky;top:0;z-index:50;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:12px;padding:14px 22px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-bottom:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
     }
-    a:hover {
-      text-decoration: underline;
-    }
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{width:44px;height:44;border-radius:10px;background:linear-gradient(135deg,#003a12,#006b2b);display:flex;align-items:center;justify-content:center;font-weight:900;color:#e7ffe7;font-size:18px;}
+    .title{font-weight:800;font-size:1.1rem;letter-spacing:0.6px;color:#eaffea}
+    nav a{margin-left:14px;color:var(--muted);font-weight:600}
+    nav a.cta{background:linear-gradient(90deg,var(--accent),#00b44a);color:#071018;padding:8px 12px;border-radius:8px}
 
-    /* === Password box top-right disguised as error === */
-    /* hidden by default; will be shown when © is clicked */
-    #passwordBox {
-      display: none;
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background-color: #f44336;
-      color: white;
-      font-family: monospace;
-      padding: 12px 18px;
-      border-radius: 6px;
-      box-shadow: 0 0 8px #f44336aa;
-      cursor: pointer;
-      width: 220px;
-      user-select: none;
-      z-index: 9999;
-      font-size: 0.9rem;
-    }
+    /* Layout */
+    .container{max-width:1100px;margin:28px auto;padding:20px;}
+    .hero{display:flex;gap:20px;align-items:center;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:22px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);}
+    .hero h1{margin:0;font-size:2rem;color:#eaffea}
+    .muted{color:var(--muted);font-size:0.95rem}
 
-    #passwordBox:hover {
-      background-color: #d32f2f;
-      box-shadow: 0 0 12px #d32f2faa;
-    }
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:20px;margin-top:20px}
+    @media (max-width:980px){.grid{grid-template-columns:1fr}}
 
-    #passwordBox input {
-      margin-top: 8px;
-      width: 100%;
-      padding: 8px;
-      font-size: 1rem;
-      border-radius: 4px;
-      border: 1px solid #9e0000;
-      background-color: #fee9e9;
-      color: #900;
-      font-weight: bold;
-      font-family: monospace;
-    }
+    .card{background:#0f1720;padding:18px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.02)}
+    .link-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    @media (max-width:520px){.link-grid{grid-template-columns:1fr}}
 
-    #passwordBox button {
-      margin-top: 6px;
-      width: 100%;
-      padding: 8px;
-      background-color: #9e0000;
-      border: none;
-      color: white;
-      font-weight: bold;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+    .link-card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:12px;border-radius:10px;border:1px solid rgba(0,230,118,0.06);display:flex;align-items:center;gap:12px;cursor:pointer;transition:transform .12s}
+    .link-card:hover{transform:translateY(-4px)}
+    .link-icon{width:44px;height:44;border-radius:8px;background:#052a16;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:900}
+    .btn{display:inline-block;padding:8px 12px;border-radius:8px;background:var(--accent);color:#02110a;font-weight:800}
 
-    #passwordBox button:hover {
-      background-color: #7a0000;
-    }
+    .movies-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    @media (max-width:520px){.movies-list{grid-template-columns:1fr}}
+    .movie-item{padding:10px;border-radius:8px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border:1px solid rgba(255,255,255,0.02)}
 
-    /* Copyright trigger (©) */
-    #copyrightTrigger {
-      position: fixed;
-      bottom: 18px;
-      left: 18px;
-      z-index: 9999;
-      font-size: 1.2rem;
-      cursor: pointer;
-      user-select: none;
-      color: #666;
-      background: rgba(255,255,255,0.85);
-      padding: 6px 10px;
-      border-radius: 6px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      transition: background-color 0.18s ease, color 0.18s ease;
-    }
-    #copyrightTrigger:hover {
-      background: #fff;
-      color: #111;
-    }
+    .chat-frame{width:100%;height:420px;border-radius:10px;border:2px solid rgba(0,230,118,0.12);overflow:hidden}
 
-    /* === Plant Site - professional botanical style === */
-    #plantSite {
-      max-width: 900px;
-      margin: 60px auto 80px;
-      padding: 40px 30px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.1);
-      color: #2d572c;
-      line-height: 1.7;
-    }
+    footer{max-width:1100px;margin:28px auto 60px;color:var(--muted);text-align:center;padding:12px 20px}
 
-    #plantSite h1 {
-      font-weight: 900;
-      font-size: 3rem;
-      margin-bottom: 20px;
-      letter-spacing: 1.2px;
-      border-bottom: 3px solid #2d572c;
-      padding-bottom: 10px;
-    }
+    /* Plant-only styles */
+    #plantSite{display:none}
+    #plantSite .plant-wrapper{max-width:900px;margin:60px auto;padding:40px;background:#fff;border-radius:12px;color:#163e24;box-shadow:0 10px 30px rgba(6,54,30,0.08)}
+    #plantSite h1{margin:0 0 12px 0;color:#06361e;font-size:2rem}
+    #plantSite p{color:#114b2a;line-height:1.6}
+    #plantSite img{width:100%;border-radius:10px;margin-top:18px;box-shadow:0 10px 30px rgba(8,53,26,0.06)}
 
-    #plantSite img {
-      max-width: 100%;
-      border-radius: 14px;
-      margin: 30px 0;
-      box-shadow: 0 6px 12px rgba(45, 87, 44, 0.25);
+    /* Utility: hide hub chrome when in plant mode */
+    .plant-mode header,
+    .plant-mode #hubSite,
+    .plant-mode footer,
+    .plant-mode aside,
+    .plant-mode #games,
+    .plant-mode #movies,
+    .plant-mode #chat,
+    .plant-mode #docs,
+    .plant-mode #updates {
+      display: none !important;
     }
-
-    #plantSite p {
-      font-size: 1.15rem;
-      color: #3a5d30;
-      text-align: justify;
-      margin-bottom: 20px;
-    }
-
-    /* === Hub Site === */
-    #hubSite {
-      display: none;
-      background-color: #0a0f1d;
-      color: #00e500;
-      min-height: 100vh;
-      padding: 40px 20px 60px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow-y: auto;
-    }
-
-    #hubSite h1 {
-      font-size: 2.8rem;
-      margin-bottom: 15px;
-      color: #00ff66;
-      text-align: center;
-      text-shadow: 0 0 10px #00ff66;
-    }
-
-    #hubSite p {
-      max-width: 850px;
-      margin: 0 auto 25px;
-      font-size: 1.1rem;
-      line-height: 1.5;
-      color: #a8f4a8;
-      text-align: center;
-    }
-
-    #hubSite a {
-      color: #00e500;
-      font-weight: 700;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    #hubSite a:hover {
-      color: #fff;
-      text-decoration: underline;
-    }
-
-    /* Lists styling */
-    #hubSite ul {
-      list-style: none;
-      padding: 0;
-      max-width: 850px;
-      margin: 0 auto 40px;
-    }
-    #hubSite li {
-      margin-bottom: 10px;
-      font-size: 1.05rem;
-      color: #88ff88;
-    }
-
-    /* Sections styling */
-    #hubSite section {
-      max-width: 900px;
-      background: #111827;
-      margin: 40px auto;
-      padding: 25px 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #00ff6688;
-      color: #c0fbc0;
-    }
-    #hubSite section h2 {
-      color: #00ff99;
-      margin-bottom: 20px;
-      font-size: 1.9rem;
-      text-shadow: 0 0 8px #00ff99aa;
-      user-select: none;
-    }
-    #hubSite section ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    #hubSite section li {
-      margin-bottom: 12px;
-      font-size: 1.05rem;
-      color: #a0f0a0;
-    }
-    #hubSite code {
-      background: #1e293b;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-family: monospace;
-      color: #aaffaa;
-      user-select: text;
-    }
-
-    /* Link Buttons */
-    .link-button {
-      display: inline-block;
-      background-color: #00e500;
-      color: #111;
-      font-weight: bold;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      user-select: none;
-      box-shadow: 0 0 8px #00ff66cc;
-      transition: background-color 0.3s ease;
-      margin-top: 10px;
-    }
-    .link-button:hover {
-      background-color: #00b500;
-    }
-
-    /* Proxy section */
-    #hubSite .hub-proxy {
-      margin-top: 30px;
-    }
-    #proxyFrameContainer iframe {
-      width: 100%;
-      height: 600px;
-      border-radius: 10px;
-      border: 2px solid #00e500;
-      margin-top: 20px;
-      box-shadow: 0 0 10px #00ff66bb;
-    }
-
-    /* Scrollbar for hub */
-    #hubSite::-webkit-scrollbar {
-      width: 8px;
-    }
-    #hubSite::-webkit-scrollbar-thumb {
-      background-color: #00e500aa;
-      border-radius: 4px;
-    }
-    #hubSite::-webkit-scrollbar-track {
-      background: #0a0f1d;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      #plantSite, #hubSite section {
-        padding: 20px 15px;
-      }
-      #plantSite h1 {
-        font-size: 2.2rem;
-      }
-      #hubSite h1 {
-        font-size: 2rem;
-      }
-      #hubSite section h2 {
-        font-size: 1.5rem;
-      }
-    }
+    .plant-mode #plantSite {display:block !important}
   </style>
 </head>
 <body>
+  <header id="mainHeader">
+    <div class="brand">
+      <div class="logo">Betagxz</div>
+      <div>
+        <div class="title">Betagxz</div>
+        <div class="muted" style="font-size:0.85rem">Games • Movies • Community</div>
+      </div>
+    </div>
 
-  <!-- Password box disguised as error (top-right) -->
-  <div id="passwordBox" title="Error: Unauthorized Access Detected" role="dialog" aria-hidden="true">
-    <div>⚠️ Error: Unauthorized Access</div>
-    <input
-      type="password"
-      id="passwordInput"
-      placeholder="Enter password to continue..."
-      autocomplete="off"
-      spellcheck="false"
-      aria-label="Password"
-    />
-    <button id="submitPassword">Unlock</button>
-  </div>
+    <nav aria-label="Main navigation">
+      <a href="#games">Games</a>
+      <a href="#movies">Movies</a>
+      <a href="#chat">Chat</a>
+      <a class="btn" href="#updates">Updates</a>
+    </nav>
+  </header>
 
-  <!-- Copyright trigger (click the © to reveal password box) -->
-  <div id="copyrightTrigger" title="Click to display access prompt">©</div>
+  <!-- Gaming Hub (default visible) -->
+  <main class="container card" id="hubSite" aria-label="Gaming Hub">
+    <section class="hero" aria-hidden="false">
+      <div>
+        <h1>Welcome to Betagxz</h1>
+        <p class="muted">Unified portal for unblocked games, movies, and community chat. Tip: Press <strong>Shift + H</strong> to switch to the Botanical Research Center view (plant-only mode).</p>
+      </div>
+      <div style="margin-left:auto;display:flex;flex-direction:column;gap:10px;min-width:200px">
+        <div class="card" style="background:#08161b;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)">
+          <div style="font-weight:800;color:#bfffc3">Hub Mode</div>
+          <div class="muted" style="margin-top:6px">Starting here by default</div>
+        </div>
+      </div>
+    </section>
 
-  <!-- Plant Site -->
-  <main id="plantSite" aria-label="Botanical Research Center Homepage">
-    <h1>Welcome to the Botanical Research Center</h1>
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Plant_green_leaf_closeup.jpg"
-      alt="Close-up of a green leaf"
-      loading="lazy"
-    />
-    <p>
-      At the Botanical Research Center, we study the biology, chemistry, and
-      growth patterns of thousands of plant species worldwide. Our mission is
-      to preserve biodiversity and educate the public on the importance of
-      plants in sustaining ecosystems.
-    </p>
-    <p>
-      Plants are essential to life on Earth. They produce the oxygen we
-      breathe, provide food, and serve as raw materials for medicine and
-      industry. Dive into our extensive research on photosynthesis, root
-      systems, leaf structures, and more.
-    </p>
-    <p>
-      Our collection boasts over 10,000 species of native and exotic plants,
-      with detailed studies on soil compatibility, water usage, and climate
-      impact.
-    </p>
+    <div class="grid" style="margin-top:18px">
+      <div>
+        <section id="games" class="card" aria-label="Game Links">
+          <h2>🎮 Curated Games</h2>
+          <p class="muted">Organized by category — click to open in a new tab.</p>
+
+          <h3 style="color:#dfffe0;margin-top:12px">Arcade & Classics</h3>
+          <div class="link-grid" style="margin-top:10px">
+            <a class="link-card" href="https://games.voodoo.io/paperio2/" target="_blank" rel="noopener noreferrer"><div class="link-icon">P</div><div><div style="font-weight:700;color:#e7ffe7">Paper.io</div><div class="muted">Fast-paced territory game</div></div></a>
+            <a class="link-card" href="https://snake.io/" target="_blank" rel="noopener noreferrer"><div class="link-icon">S</div><div><div style="font-weight:700;color:#e7ffe7">SNAKE.IO</div><div class="muted">Classic multiplayer snake</div></div></a>
+            <a class="link-card" href="https://www.kongregate.com/" target="_blank" rel="noopener noreferrer"><div class="link-icon">K</div><div><div style="font-weight:700;color:#e7ffe7">Kongregate</div><div class="muted">Large catalog</div></div></a>
+            <a class="link-card" href="https://elitefanatic.vercel.app/" target="_blank" rel="noopener noreferrer"><div class="link-icon">E</div><div><div style="font-weight:700;color:#e7ffe7">Elite Fanatic</div><div class="muted">Search browser with games</div></div></a>
+          </div>
+
+          <h3 style="color:#dfffe0;margin-top:16px">Proxies & Tools</h3>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+            <button class="btn" onclick="openAboutBlank('https://sami-socsd-public.26252526.xyz')">Hammerhead 1</button>
+            <button class="btn" onclick="openAboutBlank('https://abetag.netlify.app')">About Blank Opener</button>
+            <button class="btn" onclick="openAboutBlank('https://quizzesforhelp.26252526.xyz')">Hammerhead 2</button>
+          </div>
+        </section>
+
+        <section id="movies" class="card" aria-label="Unblocked Movies" style="margin-top:18px">
+          <h2>🎬 Unblocked Movies</h2>
+          <p class="muted">Free streaming options — availability may vary.</p>
+          <div class="movies-list" style="margin-top:12px">
+            <div class="movie-item"><a href="https://www.popcornflix.com" target="_blank" rel="noopener noreferrer">Popcornflix</a><small class="muted">Free movies, no signup</small></div>
+            <div class="movie-item"><a href="https://tubitv.com" target="_blank" rel="noopener noreferrer">Tubi TV</a><small class="muted">Legal free library</small></div>
+            <div class="movie-item"><a href="https://solarmovie.pe" target="_blank" rel="noopener noreferrer">SolarMovie</a><small class="muted">Popular releases (may need proxy)</small></div>
+            <div class="movie-item"><a href="https://ww2.123moviesfree.net" target="_blank" rel="noopener noreferrer">123Movies</a><small class="muted">Large library</small></div>
+          </div>
+        </section>
+
+        <section id="chat" class="card" aria-label="Community Chat" style="margin-top:18px">
+          <h2>💬 Community Chat</h2>
+          <p class="muted">Placeholder embed for the chat — replace with a live chat provider if desired.</p>
+          <div class="chat-frame">
+            <iframe src="https://betogxzw.netlify.app" title="Community Chat Placeholder" width="100%" height="100%" style="border:0"></iframe>
+          </div>
+        </section>
+
+        <section id="docs" class="card" aria-label="Resources" style="margin-top:18px">
+          <h2>📚 Resources & Game Collections</h2>
+          <p class="muted">Community-maintained docs and mirrors.</p>
+          <ul style="padding-left:18px;color:var(--muted)">
+            <li><a href="https://docs.google.com/document/d/1NCD7FzNqVZQLFLlxaGQeCrjRaz6hLsJwRfkX6J34OeQ/edit?tab=t.0" target="_blank" rel="noopener noreferrer">Community games document</a></li>
+            <li><a href="https://nexislearning.netlify.app" target="_blank" rel="noopener noreferrer">Nexis learning</a></li>
+          </ul>
+        </section>
+      </div>
+
+      <aside>
+        <div class="card">
+          <h2 id="updates">⚡ Activity Log</h2>
+          <p class="muted">Recent updates.</p>
+          <ul style="padding-left:18px;color:var(--muted)">
+            <li>Sep 13 2025 — Site refreshed</li>
+            <li>Sep 9 2025 — Added new proxies</li>
+            <li>Aug 20 2025 — New proxy discovered</li>
+            <li>Sep 1 2022 — Original site created</li>
+          </ul>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h2>🔗 Mirrors & Partners</h2>
+          <ul style="padding-left:18px;color:var(--muted)">
+            <li><a href="https://abetag.netlify.app" target="_blank" rel="noopener noreferrer">About blank opener</a></li>
+            <li><a href="https://sites.google.com/view/html5gamesunblocked/home" target="_blank" rel="noopener noreferrer">HTML5 Games Mirror</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
   </main>
 
-  <!-- Secret Gaming Hub -->
-  <section id="hubSite" aria-label="Secret Gaming Hub">
-    <h1>🎮 Welcome to <strong>Betagxz</strong></h1>
-    <p>Unblocked games, proxies, and stealth links 👇</p>
+  <!-- Plant Site: exclusive content shown in plant-mode -->
+  <main id="plantSite" aria-label="Botanical Research Center">
+    <div class="plant-wrapper">
+      <h1>Botanical Research Center</h1>
+      <p>Welcome to the Botanical Research Center view. When you switch to this view (Shift + H), everything related to the gaming hub is hidden — only this plant-focused content remains visible. Press <strong>Shift + H</strong> again to return to the hub.</p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Plant_green_leaf_closeup.jpg" alt="Close-up of a green leaf" loading="lazy">
+      <p style="margin-top:12px">At the Botanical Research Center, we study plant biology, growth patterns, and ecosystem roles. This content is intentionally isolated from the gaming hub to provide a focused, clean presentation.</p>
+      <section style="margin-top:18px;background:#f6fff8;padding:14px;border-radius:10px;border:1px solid rgba(0,0,0,0.04)">
+        <h3 style="margin:0 0 8px 0;color:#06361e">Research Highlights</h3>
+        <ul style="padding-left:18px;color:#0b4c26">
+          <li>Conservation initiatives and species catalogs</li>
+          <li>Soil compatibility and climate impact studies</li>
+          <li>Educational outreach and community programs</li>
+        </ul>
+      </section>
+    </div>
+  </main>
 
-    <!-- Game Links -->
-    <section aria-label="Game Links">
-      <h2>Game Links</h2>
-      <ul>
-        <li><a href="https://elitefanatic.vercel.app/" target="_blank" rel="noopener noreferrer">Some kind of search browser with games</a></li>
-        <li><a href="https://sites.google.com/view/drive-u-7-home/" target="_blank" rel="noopener noreferrer">Unblocked games G+</a></li>
-        <li><a href="https://www.childline.org.uk/toolbox/games" target="_blank" rel="noopener noreferrer">Childline games</a></li>
-        <li><a href="https://edgeone.ai/pages/games-unblocked" target="_blank" rel="noopener noreferrer">Another unblocked games website</a></li>
-        <li><a href="https://dynamitebypass.weebly.com/g4m3s.html" target="_blank" rel="noopener noreferrer">Cheap gaming website</a></li>
-        <li><a href="https://subwaysurfersunblocked.org/" target="_blank" rel="noopener noreferrer">Subway surfers (nobody plays that game)</a></li>
-        <li><a href="https://io-games-unblocked.s3.amazonaws.com/category/car-games.html" target="_blank" rel="noopener noreferrer">unblocked io games</a></li>
-        <li><a href="https://www.kongregate.com/" target="_blank" rel="noopener noreferrer">Kongregate</a></li>
-        <li><a href="https://gn-math.github.io/" target="_blank" rel="noopener noreferrer">Gn-math</a></li>
-        <li><a href="https://computercity.com/software/gaming/games-that-are-not-blocked" target="_blank" rel="noopener noreferrer">Games that are not blocked</a></li>
-        <li><a href="https://games.voodoo.io/paperio2/" target="_blank" rel="noopener noreferrer">Paper.io</a></li>
-        <li><a href="https://snake.io/" target="_blank" rel="noopener noreferrer">SNAKE.IO</a></li>
-        <li><a href="https://sites.google.com/view/classroom6x" target="_blank" rel="noopener noreferrer">Classroom 6X</a></li>
-        <li><a href="https://sites.google.com/site/unblockedgame67" target="_blank" rel="noopener noreferrer">Unblocked Game 67</a></li>
-        <li><a href="https://sites.google.com/site/unblockedgamesgold" target="_blank" rel="noopener noreferrer">Unblocked Games Gold</a></li>
-        <li><a href="https://sites.google.com/site/unblockedgamestop/rewind" target="_blank" rel="noopener noreferrer">Games Stop (Rewind)</a></li>
-        <li><a href="https://sites.google.com/site/unblockedgames76ez" target="_blank" rel="noopener noreferrer">Games 76EZ</a></li>
-        <li><a href="https://sites.google.com/site/unblockedgames77/home" target="_blank" rel="noopener noreferrer">Games 77</a></li>
-        <li><a href="https://sites.google.com/site/funblockedgames88" target="_blank" rel="noopener noreferrer">Funblocked Games 88</a></li>
-        <li><a href="https://sites.google.com/site/gamecentral1121" target="_blank" rel="noopener noreferrer">Game Central 1121</a></li>
-        <li><a href="https://sites.google.com/site/gamesrunblocked" target="_blank" rel="noopener noreferrer">Games Runblocked</a></li>
-        <li><a href="https://sites.google.com/site/iounblockedgames77" target="_blank" rel="noopener noreferrer">IO Games 77</a></li>
-        <li><a href="https://sites.google.com/view/html5gamesunblocked/home" target="_blank" rel="noopener noreferrer">HTML5 Games</a></li>
-        <li><a href="https://sites.google.com/view/kevings/" target="_blank" rel="noopener noreferrer">Kevings</a></li>
-        <li><a href="https://m.sites.google.com/site/unblockedgamesportal/portal" target="_blank" rel="noopener noreferrer">Games Portal</a></li>
-        <li><a href="https://sites.google.com/view/unblockedgame/home" target="_blank" rel="noopener noreferrer">Unblocked Game</a></li>
-        <li><a href="https://sites.google.com/site/thegamecompilation/home" target="_blank" rel="noopener noreferrer">Game Compilation</a></li>
-      </ul>
-    </section>
-
-    <!-- Latest News -->
-    <section aria-label="Latest News">
-      <h2>Latest News</h2>
-      <p>On Friday 19 August 2025, our main proxy was blocked due to URL changes, so we had to find a new proxy.</p>
-      <p>Gamers (and scientists) have discovered you can ask ChatGPT for unblocked gaming sites using the prompt: <code>find gaming websites on sites.google.com</code>, which returns reliable links for school access.</p>
-    </section>
-
-    <!-- Tools & Proxies -->
-    <section class="hub-proxy" aria-label="Tools and Proxies">
-      <h2>Tools & Proxies</h2>
-      <p>Use the proxy below to access any website stealthily without clicking external links:</p>
-      <div class="link-button" onclick="openAboutBlank('https://sami-socsd-public.26252526.xyz')">Hammerhead 1</div>
-      <div class="link-button" onclick="openAboutBlank('https://abetag.netlify.app')">About blank opener</div>
-      <div class="link-button" onclick="openAboutBlank('https://quizzesforhelp.26252526.xyz')">Hammerhead 2</div>
-      <div id="proxyFrameContainer"></div>
-    </section>
-
-    <!-- Experimental Lab -->
-    <section aria-label="Experimental Lab"> 
-      <h2>Google docs</h2>
-      <p>Useful google docs with lots of games</p>
-      <ul>
-        <li><a href="https://docs.google.com/document/d/1NCD7FzNqVZQLFLlxaGQeCrjRaz6hLsJwRfkX6J34OeQ/edit?tab=t.0" target="_blank" rel="noopener noreferrer">Google doc here!</a></li>
-      </ul>
-    </section>
-
-    <!-- Activity Log -->
-    <section aria-label="Activity Log">
-      <h2>Activity Log</h2>
-      <p>Track recent updates, blocked links, and fixes:</p>
-      <ul>
-        <li>september 1st 2022 -betagxz was created by Nathan Jones at Green middle school </li>
-        <li>19 Aug 2025 - Added new game links.</li>
-        <li>20 Aug 2025 - New Proxy found</li>
-        <li>9 sep 2025 -  8+ new proxies found</li>
-        <li>13 sep 2025 - site updated</li>
-        <li>1 sep 2025 - Shadow proxy blocked</li>
-      </ul>
-    </section>
-
-    <!-- Mirror Links -->
-    <section aria-label="Mirror Links">
-      <h2></h2>
-      <p>Our partners/useful websites</p>
-      <ul>
-        <li><a href="https://nexislearning.netlify.app" target="_blank" rel="noopener noreferrer">Nexis learning</a></li>
-        <li><a href="https://sites.google.com/view/prohomework2z/home" target="_blank" rel="noopener noreferrer">Prosg2z</a></li>
-      </ul>
-    </section>
-  </section>
+  <footer id="mainFooter">
+    <div>© Betagxz — Curated links for educational and entertainment use. Use responsibly.</div>
+  </footer>
 
   <script>
-    // Elements
-    const passwordBox = document.getElementById('passwordBox');
-    const passwordInput = document.getElementById('passwordInput');
-    const submitPassword = document.getElementById('submitPassword');
-    const plantSite = document.getElementById('plantSite');
-    const hubSite = document.getElementById('hubSite');
-    const proxyFrameContainer = document.getElementById('proxyFrameContainer');
-    const copyrightTrigger = document.getElementById('copyrightTrigger');
+    const body = document.body;
+    const hub = document.getElementById('hubSite');
+    const plant = document.getElementById('plantSite');
+    const header = document.getElementById('mainHeader');
+    const footer = document.getElementById('mainFooter');
 
-    const correctPassword = 'tralalero';
-    let unlocked = false;
-    let isHubActive = false;
-
-    // Open popup window for proxies
-    function openPopup(url) {
-      const width = 900;
-      const height = 600;
-      const left = (window.screen.width / 2) - (width / 2);
-      const top = (window.screen.height / 2) - (height / 2);
-      window.open(
-        url,
-        'proxyPopup',
-        `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`
-      );
-    }
-
-    // (Optional) Load proxy iframe inside page - not used here but handy
-    function loadProxy(url) {
-      proxyFrameContainer.innerHTML = `<iframe src="${url}" frameborder="0" loading="lazy" allowfullscreen></iframe>`;
-    }
-
-    // Unlock action
-    submitPassword.addEventListener('click', () => {
-      const val = passwordInput.value.trim();
-      if (val === correctPassword) {
-        unlocked = true;
-        passwordBox.style.display = 'none';
-        passwordBox.setAttribute('aria-hidden', 'true');
-        plantSite.style.display = 'none';
-        hubSite.style.display = 'block';
-        hubSite.setAttribute('aria-hidden', 'false');
-        isHubActive = true;
-      } else {
-        alert('Incorrect password.');
-        passwordInput.value = '';
-        passwordInput.focus();
-      }
-    });
-
-    // Shortcut toggle: Shift + H toggles between plant & hub if unlocked
-    document.addEventListener('keydown', e => {
-      if (unlocked && e.shiftKey && (e.key === 'H' || e.key === 'h')) {
-        isHubActive = !isHubActive;
-        if (isHubActive) {
-          plantSite.style.display = 'none';
-          hubSite.style.display = 'block';
-        } else {
-          plantSite.style.display = 'block';
-          hubSite.style.display = 'none';
-        }
-      }
-    });
-
-    // On load, keep password box hidden; focus not forced
+    // Initialize: start in hub mode
     window.addEventListener('load', () => {
-      passwordBox.style.display = 'none';
-      passwordBox.setAttribute('aria-hidden', 'true');
-      plantSite.style.display = 'block';
-      hubSite.style.display = 'none';
-      hubSite.setAttribute('aria-hidden', 'true');
+      body.classList.remove('plant-mode');
+      hub.style.display = 'block';
+      plant.style.display = 'none';
+      header.style.display = '';
+      footer.style.display = '';
+      // Ensure plant aria-hidden
+      hub.setAttribute('aria-hidden','false');
+      plant.setAttribute('aria-hidden','true');
     });
 
-    // Show password box when © is clicked
-    copyrightTrigger.addEventListener('click', () => {
-      // Show password box and focus input
-      passwordBox.style.display = 'block';
-      passwordBox.setAttribute('aria-hidden', 'false');
-      passwordInput.focus();
-      // Optionally scroll to top for small viewports so the box is visible
-      if (window.innerWidth < 640) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Toggle between hub and plant-only views with Shift+H
+    document.addEventListener('keydown', (e) => {
+      if ((e.key === 'H' || e.key === 'h') && e.shiftKey) {
+        const currentlyPlant = body.classList.contains('plant-mode');
+        if (!currentlyPlant) {
+          // Enter plant-only mode: hide header, hub, footer and show plant only
+          body.classList.add('plant-mode');
+          header.style.display = 'none';
+          footer.style.display = 'none';
+          hub.style.display = 'none';
+          plant.style.display = 'block';
+          hub.setAttribute('aria-hidden','true');
+          plant.setAttribute('aria-hidden','false');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          // Exit plant-only mode: show hub and chrome again
+          body.classList.remove('plant-mode');
+          header.style.display = '';
+          footer.style.display = '';
+          hub.style.display = 'block';
+          plant.style.display = 'none';
+          hub.setAttribute('aria-hidden','false');
+          plant.setAttribute('aria-hidden','true');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       }
     });
-  </script>
 
-  <script>
-    // Function to open URLs in about:blank popup
+    // Open about:blank popup helper (unchanged)
     function openAboutBlank(url) {
-        const popup = window.open('about:blank', '_blank');
-        if (popup) {
-            popup.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Schoology</title>
-                    <style>
-                        body, html {
-                            margin: 0;
-                            padding: 0;
-                            height: 100%;
-                            overflow: hidden;
-                        }
-                        iframe {
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            width: 100%;
-                            height: 100%;
-                            border: none;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <iframe src="${url}" allowfullscreen></iframe>
-                </body>
-                </html>
-            `);
-            popup.document.close();
-        } else {
-            alert('Popup blocked. Please allow popups for this site.');
-        }
+      const popup = window.open('about:blank', '_blank');
+      if (!popup) {
+        alert('Popup blocked. Please allow popups for this site.');
+        return;
+      }
+      const doc = popup.document;
+      doc.open();
+      doc.write(`<!doctype html><html><head><meta charset="utf-8"><title>External</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{height:100%;margin:0}iframe{border:0;width:100%;height:100%}</style></head><body><iframe src="${url}" allowfullscreen></iframe></body></html>`);
+      doc.close();
     }
-</script>
+  </script>
 </body>
 </html>
