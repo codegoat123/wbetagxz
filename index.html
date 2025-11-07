@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Betagxz— Games, Movies, Chat, Proxy</title>
+  <title>GameUniteX — Games, Movies, Chat, Proxy</title>
   <style>
     :root{
       --bg:#071018;
@@ -42,6 +42,8 @@
     .link-card{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border:1px solid rgba(0,230,118,0.05);cursor:pointer;transition:transform .12s}
     .link-card:hover{transform:translateY(-4px)}
     .link-icon{width:44px;height:44;border-radius:8px;background:#052a16;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:900}
+    .link-meta{font-weight:800;color:#e7ffe7}
+    .link-sub{font-size:0.9rem;color:var(--muted)}
 
     /* Movies */
     .movies-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
@@ -71,6 +73,11 @@
     .plant-mode #plantSite {display:block !important}
 
     footer{max-width:1100px;margin:28px auto 60px;color:var(--muted);text-align:center;padding:12px}
+    /* Small helpers */
+    .category-title{margin:14px 0 8px 0;color:#dfffe0;font-weight:800}
+    .small-list{list-style:none;padding:0;margin:8px 0 0 0}
+    .small-list li{margin:6px 0;color:var(--muted)}
+    .badge-new{background:#0ae37a;color:#04210b;padding:4px 8px;border-radius:8px;font-weight:800;margin-left:8px}
   </style>
 </head>
 <body>
@@ -78,7 +85,7 @@
     <div class="brand">
       <div class="logo">GX</div>
       <div>
-        <div class="title">Betagxz</div>
+        <div class="title">GameUniteX</div>
         <div class="muted" style="font-size:0.8rem">Games • Movies • Chat • Proxy</div>
       </div>
     </div>
@@ -98,7 +105,7 @@
     <section id="home" class="tab-panel active card" aria-label="Home">
       <div class="hero">
         <div style="flex:1">
-          <h1 style="margin:0">Welcome to Betagxz note: website under construction so movies don't work yet and games are probably blocked, the only thing that is working are the proxies</h1>
+          <h1 style="margin:0">Welcome to GameUniteX</h1>
           <p class="muted" style="margin-top:8px">Your unified portal for unblocked games, movies, and community chat. Use the tabs to switch sections. Tip: Press <strong>Shift + H</strong> to switch to the Botanical Research Center (plant-only view).</p>
         </div>
         <div style="min-width:220px">
@@ -123,27 +130,160 @@
     <!-- Games panel -->
     <section id="games" class="tab-panel card" aria-label="Games" role="region" tabindex="-1">
       <h2 style="margin-top:0">🎮 Curated Games</h2>
-      <p class="muted">Organized by category — click to open in a new tab.</p>
+      <p class="muted">Organized by category — all links open in a new tab. These were curated from community hubs and mirrors.</p>
 
-      <div style="margin-top:12px">
-        <h3 style="margin-bottom:8px">Arcade & Classics</h3>
-        <div class="link-grid">
-          <a class="link-card" href="https://games.voodoo.io/paperio2/" target="_blank" rel="noopener noreferrer"><div class="link-icon">P</div><div><div style="font-weight:700">Paper.io</div><div class="muted">Fast-paced territory game</div></div></a>
-          <a class="link-card" href="https://snake.io/" target="_blank" rel="noopener noreferrer"><div class="link-icon">S</div><div><div style="font-weight:700">SNAKE.IO</div><div class="muted">Classic multiplayer snake</div></div></a>
-          <a class="link-card" href="https://www.kongregate.com/" target="_blank" rel="noopener noreferrer"><div class="link-icon">K</div><div><div style="font-weight:700">Kongregate</div><div class="muted">Large catalog</div></div></a>
-          <a class="link-card" href="https://elitefanatic.vercel.app/" target="_blank" rel="noopener noreferrer"><div class="link-icon">E</div><div><div style="font-weight:700">Elite Fanatic</div><div class="muted">Search browser with games</div></div></a>
-        </div>
+      <!-- Puzzle & Strategy -->
+      <div class="category-title">🧩 Puzzle & Strategy</div>
+      <div class="link-grid" aria-label="Puzzle and Strategy links">
+        <a class="link-card" href="https://sites.google.com/view/poly-track-backup" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">PT</div>
+          <div><div class="link-meta">Poly Track Backup</div><div class="link-sub">Track-based puzzle collection</div></div>
+        </a>
+        <a class="link-card" href="https://sites.google.com/view/poly-track/poly-track/" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">PT</div>
+          <div><div class="link-meta">Poly Track</div><div class="link-sub">Original Poly Track puzzles</div></div>
+        </a>
+        <a class="link-card" href="https://fr33g4m3s.github.io/NoOxygenIncluded.html" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">NO</div>
+          <div><div class="link-meta">No Oxygen Included</div><div class="link-sub">Strategy / survival puzzle</div></div>
+        </a>
+        <a class="link-card" href="https://sites.google.com/view/jifisdfnis5iurf5934-t43j9t03jd/sakura" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">SK</div>
+          <div><div class="link-meta">Sakura</div><div class="link-sub">Puzzle / themed mini-games</div></div>
+        </a>
       </div>
 
-      <div style="margin-top:18px">
-        <h3 style="margin-bottom:8px">IO & Multiplayer</h3>
-        <div class="link-grid">
-          <a class="link-card" href="https://io-games-unblocked.s3.amazonaws.com/category/car-games.html" target="_blank" rel="noopener noreferrer"><div class="link-icon">IO</div><div><div style="font-weight:700">Unblocked IO Games</div><div class="muted">Car & arena IOs</div></div></a>
-          <a class="link-card" href="https://subwaysurfersunblocked.org/" target="_blank" rel="noopener noreferrer"><div class="link-icon">SS</div><div><div style="font-weight:700">Subway Surfers</div><div class="muted">Endless runner</div></div></a>
-          <a class="link-card" href="https://gn-math.github.io/" target="_blank" rel="noopener noreferrer"><div class="link-icon">G</div><div><div style="font-weight:700">GN Math</div><div class="muted">Puzzles</div></div></a>
-          <a class="link-card" href="https://sites.google.com/view/html5gamesunblocked/home" target="_blank" rel="noopener noreferrer"><div class="link-icon">H5</div><div><div style="font-weight:700">HTML5 Games</div><div class="muted">Browser-friendly</div></div></a>
-        </div>
+      <!-- Arcade & Action -->
+      <div class="category-title">🚗 Arcade & Action</div>
+      <div class="link-grid" aria-label="Arcade and Action links">
+        <a class="link-card" href="https://sites.google.com/view/drive-u-7-home-10/clash" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">DU</div>
+          <div><div class="link-meta">Drive U 7 - Clash</div><div class="link-sub">Racing and action collection</div></div>
+        </a>
+        <a class="link-card" href="https://ultimategamesdoc1.github.io/Ultimate-Games-Doc/" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">UG</div>
+          <div><div class="link-meta">Ultimate Games Doc</div><div class="link-sub">Large, curated game doc</div></div>
+        </a>
+        <a class="link-card" href="https://chstextbook.github.io/pages/nav/games5.html" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">G5</div>
+          <div><div class="link-meta">Games 5</div><div class="link-sub">Classic unblocked collection</div></div>
+        </a>
+        <a class="link-card" href="https://dynamitebypass.weebly.com/g4m3s.html" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">DB</div>
+          <div><div class="link-meta">Dynamite Bypass</div><div class="link-sub">Misc arcade and action</div></div>
+        </a>
+        <a class="link-card" href="https://sites.google.com/view/gxming-zone-13-/home" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">GX</div>
+          <div><div class="link-meta">GXming Zone 13</div><div class="link-sub">Community arcade mirrors</div></div>
+        </a>
       </div>
+
+      <!-- Multiplayer & IO -->
+      <div class="category-title">🌐 Multiplayer & IO</div>
+      <div class="link-grid" aria-label="Multiplayer and IO links">
+        <a class="link-card" href="https://io-games-unblocked.s3.amazonaws.com/category/multiplayer-games.html" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">IO</div>
+          <div><div class="link-meta">IO Games Multiplayer</div><div class="link-sub">Large IO game index</div></div>
+        </a>
+        <a class="link-card" href="https://www.spacegoo.com" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">SG</div>
+          <div><div class="link-meta">Spacegoo</div><div class="link-sub">Multiplayer / browser games</div></div>
+        </a>
+        <a class="link-card" href="https://edgeone.ai/pages/games-unblocked" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">EO</div>
+          <div><div class="link-meta">EdgeOne Games Unblocked</div><div class="link-sub">Curated unblocked selection</div></div>
+        </a>
+        <a class="link-card" href="https://sites.google.com/site/subgfyfs/home" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">SB</div>
+          <div><div class="link-meta">Subgfyfs</div><div class="link-sub">Multiplayer / community hub</div></div>
+        </a>
+      </div>
+
+      <!-- Educational & Mixed -->
+      <div class="category-title">🧠 Educational & Mixed</div>
+      <div class="link-grid" aria-label="Educational links">
+        <a class="link-card" href="https://www.childline.org.uk/toolbox/games" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">CL</div>
+          <div><div class="link-meta">Childline Games</div><div class="link-sub">Safe, child-friendly activities</div></div>
+        </a>
+        <a class="link-card" href="https://sites.google.com/view/jamalsenglishtutoringlessons" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">JT</div>
+          <div><div class="link-meta">Jamal's Tutoring Games</div><div class="link-sub">Learning-focused activities</div></div>
+        </a>
+        <a class="link-card" href="https://sites.google.com/view/nebula-defnotmath/home" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">NB</div>
+          <div><div class="link-meta">Nebula (Not Math)</div><div class="link-sub">Mixed learning and fun</div></div>
+        </a>
+        <a class="link-card" href="https://sites.google.com/view/schoolworkgrades1-10/home-room?authuser=0" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">SW</div>
+          <div><div class="link-meta">Schoolwork Grades 1–10</div><div class="link-sub">Educational resources and games</div></div>
+        </a>
+      </div>
+
+      <!-- Hidden & Proxy-Based Hubs -->
+      <div class="category-title">🕵️ Hidden & Proxy-Based Hubs</div>
+      <div class="link-grid" aria-label="Hidden and proxy based hubs">
+        <a class="link-card" href="https://sites.google.com/view/copyright-dragon-" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">CD</div>
+          <div><div class="link-meta">Copyright Dragon</div><div class="link-sub">Stealth game hub</div></div>
+        </a>
+        <a class="link-card" href="https://sites.google.com/view/42unbed" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">42</div>
+          <div><div class="link-meta">42 Unbed</div><div class="link-sub">Mirror hub</div></div>
+        </a>
+        <a class="link-card" href="https://sites.google.com/view/oldsecuredweb" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">OS</div>
+          <div><div class="link-meta">Old Secured Web</div><div class="link-sub">Archived game lists</div></div>
+        </a>
+        <a class="link-card" href="https://sites.google.com/view/g-vault/" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">GV</div>
+          <div><div class="link-meta">G-Vault</div><div class="link-sub">Vault of mirrors and games</div></div>
+        </a>
+        <a class="link-card" href="https://sites.google.com/view/pulsarunbl0cked/home" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">PU</div>
+          <div><div class="link-meta">Pulsar Unblocked</div><div class="link-sub">Proxy-friendly collection</div></div>
+        </a>
+        <a class="link-card" href="https://undeblocked-main.my.canva.site/home" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">UN</div>
+          <div><div class="link-meta">Undeblocked (Canva)</div><div class="link-sub">Canva-built mirror hub</div></div>
+        </a>
+      </div>
+
+      <!-- Experimental & Partner Zones -->
+      <div class="category-title">🧪 Experimental & Partner Zones</div>
+      <div class="link-grid" aria-label="Experimental and partner zones">
+        <a class="link-card" href="https://sites.google.com/view/susanoosarcade/home" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">SA</div>
+          <div><div class="link-meta">Susanoo's Arcade</div><div class="link-sub">Indie & experimental games</div></div>
+        </a>
+        <a class="link-card" href="https://sites.google.com/ottumwaschools.com/vybrixv3/-home-" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">VV</div>
+          <div><div class="link-meta">Vybrix V3</div><div class="link-sub">School-hosted mirror</div></div>
+        </a>
+        <a class="link-card" href="https://sites.google.com/ottumwaschools.com/viewglobal/-" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">VG</div>
+          <div><div class="link-meta">ViewGlobal</div><div class="link-sub">Global mirror portal</div></div>
+        </a>
+        <a class="link-card" href="https://sites.google.com/site/subgfyfs/home" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">SG</div>
+          <div><div class="link-meta">Subgfyfs</div><div class="link-sub">Community collections</div></div>
+        </a>
+      </div>
+
+      <!-- Misc & Additional -->
+      <div class="category-title">📦 Misc & Additional</div>
+      <div class="link-grid" aria-label="Miscellaneous links">
+        <a class="link-card" href="https://www.spacegoo.com" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">SG</div>
+          <div><div class="link-meta">Spacegoo</div><div class="link-sub">Browser-based games</div></div>
+        </a>
+        <a class="link-card" href="https://chstextbook.github.io/pages/nav/games5.html" target="_blank" rel="noopener noreferrer">
+          <div class="link-icon">G5</div>
+          <div><div class="link-meta">Games 5</div><div class="link-sub">Additional mirror list</div></div>
+        </a>
+      </div>
+
+      <p class="muted" style="margin-top:14px">If any link is broken or blocked on your network, try the Proxy tab or the Quick Proxies in the Proxy section.</p>
     </section>
 
     <!-- Movies panel -->
@@ -196,7 +336,7 @@
 
           <div class="card" style="margin-top:12px">
             <strong>Notes</strong>
-            <ul style="margin-top:8px;color:var(--muted)">
+            <ul class="small-list" style="margin-top:8px;color:var(--muted)">
               <li>Third-party sites may block embedding. Use the Open in new window option if it fails.</li>
               <li>Respect copyright and local network policies.</li>
             </ul>
@@ -218,7 +358,7 @@
       <p class="muted">Recent changes and site history.</p>
       <ul style="color:var(--muted);margin-top:12px">
         <li>Sep 13 2025 — Site refreshed with tabbed layout</li>
-        <li>Sep 9 2025 — Added new proxies</li>
+        <li>Sep 9 2025 — Added new proxies and curated Nexus links</li>
         <li>Aug 20 2025 — New proxy discovered</li>
         <li>Sep 1 2022 — Original site created by Nathan Jones</li>
       </ul>
@@ -229,13 +369,13 @@
   <main id="plantSite" aria-label="Botanical Research Center">
     <div style="max-width:900px;margin:60px auto;padding:36px;background:#fff;border-radius:12px;color:#103e23;box-shadow:0 10px 30px rgba(6,54,30,0.08)">
       <h1 style="margin-top:0">Botanical Research Center</h1>
-      <p> . Plants are cool.</p>
+      <p>When you switch to this view with <strong>Shift + H</strong>, everything from the hub is hidden so only this plant-focused content is visible. Press <strong>Shift + H</strong> again to return to the hub.</p>
       <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Plant_green_leaf_closeup.jpg" alt="Close-up of a green leaf" loading="lazy" style="width:100%;border-radius:10px;margin-top:12px;box-shadow:0 10px 30px rgba(8,53,26,0.06)">
       <p style="margin-top:12px;color:#0b4c26">At the Botanical Research Center, we study plant biology, growth patterns, and ecosystem roles. This view is intentionally exclusive of gaming content.</p>
     </div>
   </main>
 
-  <footer id="siteFooter">© Betagxz — Curated links for educational and entertainment use. Use responsibly.</footer>
+  <footer id="siteFooter">© GameUniteX — Curated links for educational and entertainment use. Use responsibly.</footer>
 
   <script>
     // Tabs logic
